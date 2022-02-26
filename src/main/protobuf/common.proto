@@ -1,0 +1,30 @@
+syntax = "proto2";
+
+package sae;
+
+option java_package = "com.trendmicro.sae.datatypes.protos";
+
+message CommonHeader {
+  enum EVENT_SOURCE_TYPE {
+    EVENT_SOURCE_TELEMETRY = 1;
+    EVENT_SOURCE_JAGUAR    = 2;
+    EVENT_SOURCE_EVENT_LOG = 3;
+    EVENT_SOURCE_SPN_FEEDBACK = 4;
+    EVENT_SOURCE_EMAIL_META = 5;
+  }
+  required EVENT_SOURCE_TYPE eventSourceType = 1;
+  required string version                    = 2;
+  required int64 eventTime                   = 3;
+  required string customerId                 = 4;
+  repeated string tags                       = 5;
+  required string uuid                       = 6;
+  optional uint64 receivedTime               = 7;
+  optional string packagePath                = 8;
+  optional string productCode                = 9;
+  optional string packageTraceId             = 10;
+  optional string filterRiskLevel            = 11;
+  optional string groupId                    = 12;
+  optional string tenantGuid                 = 13;
+  optional bool shouldSkip                   = 14;
+  optional uint32 bitwiseFilterRiskLevel     = 15;
+}

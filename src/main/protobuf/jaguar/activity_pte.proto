@@ -1,0 +1,114 @@
+syntax = "proto2";
+
+package sae.jaguar;
+
+import "common.proto";
+import "jaguar/header.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos.jaguar";
+
+// Raw data schema: https://wiki.jarvis.trendmicro.com/display/ERS/Schema+of+Account-Acitivities#SchemaofAccountAcitivities-Activity-PTE
+message ActivityPteEvent {
+  // Common Header
+  required CommonHeader.EVENT_SOURCE_TYPE eventSourceType             = 1;
+  required string version                                             = 2;
+  required int64 eventTime                                            = 3;
+  required string customerId                                          = 4;  // clp_company_id
+  repeated string tags                                                = 5;
+  required string uuid                                                = 6;
+  optional uint64 receivedTime                                        = 7;
+  optional string packagePath                                         = 8;
+  optional string productCode                                         = 9;
+  optional string packageTraceId                                      = 10;
+  optional string filterRiskLevel                                     = 11;
+  optional string groupId                                             = 12;
+  optional string tenantGuid                                          = 13;
+  optional bool shouldSkip                                            = 14;
+  optional uint32 bitwiseFilterRiskLevel                              = 15;
+
+  optional JaguarHeader.JAGUAR_DATA_TYPE dataType                     = 100;
+  optional string orgId                                               = 101;
+  optional string userId                                              = 102;
+  optional string principalName                                       = 103;
+  optional string mailbox                                             = 104;
+  optional string domainName                                          = 105;
+  optional string samUser                                             = 106;
+  optional string schemaVersion                                       = 107;
+  optional string ruleUuid                                            = 108;
+  optional string ruleName                                            = 109;
+  optional string ruleType                                            = 110;
+  optional string riskLevel                                           = 111;
+  optional string riskConfidenceLevel                                 = 112;
+  optional string remarks                                             = 113;
+  optional int64 firstSeen                                            = 114;
+  optional int64 lastSeen                                             = 115;
+  optional string scanTs                                              = 116;
+  repeated string o365ActivityUids                                    = 117;
+  repeated DirectoryAuditHighlight directoryAuditHighlights           = 118;
+  repeated string highlightedText                                     = 119;
+  optional string eventId                                             = 120;
+
+  // meta
+  optional string metaType                                        = 201;
+  optional string metaPwdSprayIp                                  = 202;
+  optional int64 metaPwdSprayIpCompanyCount                       = 203;
+  optional int64 metaPwdSprayIpUserCount                          = 204;
+  optional int64 metaPwdSprayIpSignInFailCount                    = 205;
+  optional int64 metaPwdSprayIpSignInSuccessCount                 = 206;
+  optional int64 metaPwdSprayUserSignInFailCount                  = 207;
+  optional int64 metaPwdSprayUserSignInSuccessCount               = 208;
+  optional string metaPwdSprayClientAppUsed                       = 209;
+  optional string metaPwdSprayClientDeviceBrowser                 = 210;
+  repeated Fail2SuccessIPStat proteinMetaFail2SuccessIpStats      = 211;
+  optional string metaAnomalousAgentOs                            = 212;
+  repeated AgentStats metaAnomalousAgentStats                     = 213;
+  optional string metaAnomalousAgent                              = 214;
+  repeated string metaSuspiciousMailboxRulesForwardAddresses      = 215;
+  repeated Message metaCompromisedMailbox                         = 216;
+
+   //SignInHighlight
+   repeated int64 signInHighlightEventTimestamps                  = 301;
+   repeated string signInHighlightIps                             = 302;
+   repeated string signInHighlightAppIds                          = 303;
+   repeated string signInHighlightAppNames                        = 304;
+   repeated string signInHighlightDeviceIds                       = 305;
+
+  message DirectoryAuditHighlight {
+    required int64 eventTimestamp                                     = 1;
+    optional string initiatedUpn                                      = 2;
+    optional string initiatedUserId                                   = 3;
+    optional string initiatedAppId                                    = 4;
+    optional string targetUpn                                         = 5;
+    optional string targetUserId                                      = 6;
+    optional string targetAppId                                       = 7;
+    optional string targetAppName                                     = 8;
+  }
+
+  message Fail2SuccessIPStat {
+    optional string ipAddress                                         = 1;
+    optional int64 ipSignInFailCount                                  = 2;
+    optional int64 ipCompanyCount                                     = 3;
+    optional int64 ipDayCount                                         = 4;
+    optional int64 userSignInFailCount                                = 5;
+    optional int64 userDayCount                                       = 6;
+  }
+
+  message AgentStats {
+    optional string agent                                             = 1;
+    optional int64 count                                              = 2;
+  }
+
+  message Message {
+    required string jaguarUid             = 1;
+    required string msgUuid               = 2; // m_external_uid
+    optional string msgId                 = 3; // message_uid
+    optional string mailMsgId             = 4; // tmase_message_id
+    optional string mailMsgSubject        = 5; // tmase_subject
+    repeated string mailFromAddresses     = 6; // tmase_from_address
+    repeated string mailToAddresses       = 7; // tmase_to_addresses
+    repeated string mailCcAddresses       = 8; // tmase_cc_addresses
+    repeated string mailBccAddresses      = 9; // tmase_bcc_addresses
+    optional int64  eventTime             = 10; // mail_receive_timestamp_orig
+  }
+
+}

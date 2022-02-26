@@ -1,0 +1,67 @@
+syntax = "proto2";
+
+package sae.product;
+
+import "common.proto";
+import "jaguar/header.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos.product";
+
+message JaguarEvent {
+  // Common Header
+  required CommonHeader.EVENT_SOURCE_TYPE eventSourceType = 1;
+  required string version                                 = 2;
+  required int64 eventTime                                = 3;
+  required string customerId                              = 4;
+  repeated string tags                                    = 5;
+  required string uuid                                    = 6;
+  optional uint64 receivedTime                            = 7;
+  optional string packagePath                             = 8;
+  optional string productCode                             = 9;
+  optional string packageTraceId                          = 10;
+  optional string filterRiskLevel                         = 11;
+  optional string groupId                                 = 12;
+  optional string tenantGuid                              = 13;
+  optional bool shouldSkip                                = 14;
+  optional uint32 bitwiseFilterRiskLevel                  = 15;
+
+  // CAS DNA
+  optional sae.jaguar.JaguarHeader.JAGUAR_DATA_TYPE dataType = 100;
+  required string eventId             = 101;
+  optional string eventName           = 102;
+  optional string description         = 103;
+  optional string ruleVer             = 104;
+  optional string rt_utc              = 105;
+  required string mailbox             = 106;
+  optional string msgId               = 107;
+  optional string msgUuid             = 108;
+  required int64 rt                   = 109;
+  repeated string suser               = 110;
+  repeated string duser               = 111;
+  optional string mailMsgSubject      = 112;
+  repeated string requests            = 113;
+  repeated Attachment attachment      = 114;
+  repeated string highlightedRequest  = 115;
+  repeated string highlightedFileName = 116;
+  repeated string highlightedFileHash = 117;
+  optional string remarks             = 118;
+  optional string samUser             = 119; // TODO: modify to required after Jaguar v1 is retired
+  optional string groupIdCorrKey      = 120;
+  repeated string groupIdCorrValues   = 121;
+  repeated string highlightedText     = 122;
+  optional string orgId               = 123;
+  repeated string attachmentFileName  = 124;
+  repeated string attachmentFileHashs = 125;
+  repeated int64  attachmentFileSizes = 126;
+  repeated string attachmentFileTlshs = 127;
+  repeated string attachmentMalNames  = 128;
+  optional string ruleName            = 129;
+
+  message Attachment {
+    optional string attachmentFileName = 1;
+    optional string attachmentFileHash = 2;
+    optional int64 attachmentFileSize  = 3;
+    optional string attachmentFileTlsh = 4;
+    optional string malName            = 5;
+  }
+}

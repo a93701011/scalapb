@@ -1,0 +1,149 @@
+syntax = "proto2";
+
+package sae.telemetry;
+
+import "common.proto";
+import "telemetry/telemetry.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos.telemetry";
+
+message ModifiedProcessEvent {
+  // From common header
+  required CommonHeader.EVENT_SOURCE_TYPE eventSourceType = 1;
+  required string version                                 = 2;
+  required int64 eventTime                                = 3;
+  required string customerId                              = 4;
+  repeated string tags                                    = 5;
+  required string uuid                                    = 6;
+  optional uint64 receivedTime                            = 7;
+  optional string packagePath                             = 8;
+  optional string productCode                             = 9;
+  optional string packageTraceId                          = 10;
+  optional string filterRiskLevel                         = 11;
+  optional string groupId                                 = 12;
+  optional string tenantGuid                              = 13;
+  optional bool shouldSkip                                = 14;
+  optional uint32 bitwiseFilterRiskLevel                  = 15;
+  // From telemetry common header
+  required TelemetryHeader.TELEMETRY_EVENT_ID eventId        = 101;
+  required TelemetryHeader.TELEMETRY_EVENT_SUB_ID eventSubId = 102;
+  required int64 eventHashId                                 = 103;
+  required int64 firstSeen                                   = 104;
+  optional int64 lastSeen                                    = 105;
+  required string endpointGuid                               = 106;
+  optional string endpointHostName                           = 107; // TODO: get from future schema
+  repeated string endpointIp                                 = 108;
+  repeated string endpointMacAddress                         = 109;
+  repeated string logonUser                                  = 110;
+  repeated string userDomain                                 = 111;
+  required string timezone                                   = 112;
+  required string pname                                      = 113;
+  required string pver                                       = 114;
+  required int32 plang                                       = 115;
+  required int32 pplat                                       = 116;
+  required string osName                                     = 117;
+  required string osVer                                      = 118;
+  optional string osDescription                              = 119;
+  optional string osType                                     = 120;
+  // Process fields
+  required int64 processHashId                = 201;
+  required string processName                 = 202;
+  required int32 processPid                   = 203;
+  optional int32 sessionId                    = 204;
+  optional string processUser                 = 205;
+  optional string processUserDomain           = 206; // skip this field if it's a local account
+  optional int64 processLaunchTime            = 207; // UTC
+  optional string processCmd                  = 208;
+  optional int64 authId                       = 209;
+  optional int32 integrityLevel               = 210;
+  optional int64 processFileHashId            = 211; // hash_id in object_meta to get the filename (value)
+  optional string processFilePath             = 212;
+  optional string processFileHashSha1         = 213;
+  optional string processFileHashSha256       = 214;
+  optional string processFileHashMd5          = 215;
+  repeated string processSigner               = 216;
+  repeated bool processSignerValid            = 217;
+  optional int64 processFileSize              = 218;
+  optional int64 processFileCreation          = 219;
+  optional int64 processFileModifiedTime      = 220;
+  optional int32 processTrueType              = 221;
+  optional int32 processSubTrueType           = 222;
+  optional string processFileCurrentOwnerSid  = 223;
+  optional string processFileCurrentOwnerName = 224; // in the format domain name\user name
+  optional string processFileOwnerSid         = 225;
+  optional string processFileOwnerName        = 226; // in the format domain name\user name
+  optional string processFileGroupSid         = 227;
+  optional string processFileGroupName        = 228; // in the format domain name\group name
+  optional string processFileSaclString       = 229; // describe Sacl and Dacl by Security Descriptor String Format
+  optional string processFileDaclString       = 230; // describe Dacl and Dacl by Security Descriptor String Format
+  optional bool processFileRemoteAccess       = 231; // File Remote Access flag
+  optional string standardOutputType          = 232; // socket, pipe
+  optional string standardOutputName          = 233; // ipaddress or pipename
+  optional string standardInputType           = 234; // socket, pipe
+  optional string standardInputName           = 235; // ipaddress or pipename
+  optional string standardErrorType           = 236; // socket, pipe
+  optional string standardErrorName           = 237; // ipaddress or pipename
+  repeated string processFileTelemetryTags    = 238;
+  optional int64 parentHashId                 = 301;
+  optional string parentName                  = 302;
+  optional int32 parentPid                    = 303;
+  optional int32 parentSessionId              = 304;
+  optional string parentUser                  = 305;
+  optional string parentUserDomain            = 306; // skip this field if it's a locl account
+  optional int64 parentLaunchTime             = 307; // UTC
+  optional string parentCmd                   = 308;
+  optional int64 parentAuthId                 = 309;
+  optional int32 parentIntegrityLevel         = 310;
+  optional int64 parentFileHashId             = 311; // hash_id in object_meta to get the filename (value)
+  optional string parentFilePath              = 312;
+  optional string parentFileHashSha1          = 313;
+  optional string parentFileHashSha256        = 314;
+  optional string parentFileHashMd5           = 315;
+  repeated string parentSigner                = 316;
+  repeated bool parentSignerValid             = 317;
+  optional int64 parentFileSize               = 318;
+  optional int64 parentFileCreation           = 319;
+  optional int64 parentFileModifiedTime       = 320;
+  optional int32 parentTrueType               = 321;
+  optional int32 parentSubTrueType            = 322;
+  optional string parentFileCurrentOwnerSid   = 323;
+  optional string parentFileCurrentOwnerName  = 324; // in the format domain name\user name
+  optional string parentFileOwnerSid          = 325;
+  optional string parentFileOwnerName         = 326; // in the format domain name\user name
+  optional string parentFileGroupSid          = 327;
+  optional string parentFileGroupName         = 328; // in the format domain name\group name
+  optional string parentFileSaclString        = 329; // describe Sacl and Dacl by Security Descriptor String Format
+  optional string parentFileDaclString        = 330; // describe Dacl and Dacl by Security Descriptor String Format
+  optional bool parentFileRemoteAccess        = 331; // File Remote Access flag
+  optional string parentStandardOutputType    = 332; // socket, pipe
+  optional string parentStandardOutputName    = 333; // ipaddress or pipename
+  optional string parentStandardInputType     = 334; // socket, pipe
+  optional string parentStandardInputName     = 335; // ipaddress or pipename
+  optional string parentStandardErrorType     = 336; // socket, pipe
+  optional string parentStandardErrorName     = 337; // ipaddress or pipename
+  repeated string parentFileTelemetryTags     = 338;
+  // ModifiedProcessEvent fields
+  required int64 objectHashId                 = 401;
+  required int64 objectProcessHashId          = 402;
+  optional int64 objectFirstSeen              = 403;
+  optional int64 objectLastSeen               = 404;
+  // others
+  repeated string extraInfo                   = 501;
+  // Process fields
+  optional string objectName                  = 602;
+  optional int32 objectPid                    = 603;
+  optional int32 objectSessionId              = 604;
+  optional int64 objectLaunchTime             = 605; // UTC
+  optional string objectCmd                   = 606;
+  optional int64 objectAuthId                 = 607;
+  optional int32 objectIntegrityLevel         = 608;
+  optional string objectStandardOutputType    = 609; // socket, pipe
+  optional string objectStandardOutputName    = 610; // ipaddress or pipename
+  optional string objectStandardInputType     = 611; // socket, pipe
+  optional string objectStandardInputName     = 612; // ipaddress or pipename
+  optional string objectStandardErrorType     = 613; // socket, pipe
+  optional string objectStandardErrorName     = 614; // ipaddress or pipename
+  // File Fields
+  repeated string objectSigner                = 701;
+  repeated bool objectSignerValid             = 702;
+}

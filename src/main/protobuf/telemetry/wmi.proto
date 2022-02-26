@@ -1,0 +1,64 @@
+syntax = "proto2";
+
+package sae.telemetry;
+
+import "common.proto";
+import "telemetry/telemetry.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos.telemetry";
+
+message WmiEvent {
+  enum TELEMETRY_WMI_TYPE {
+    TELEMETRY_WMI_FILTER   = 1;
+    TELEMETRY_WMI_CONSUMER = 2;
+    TELEMETRY_WMI_BIND     = 3;
+  }
+
+  // From common header
+  required CommonHeader.EVENT_SOURCE_TYPE eventSourceType = 1;
+  required string version                                 = 2;
+  required int64 eventTime                                = 3;
+  required string customerId                              = 4;
+  repeated string tags                                    = 5;
+  required string uuid                                    = 6;
+  optional uint64 receivedTime                            = 7;
+  optional string packagePath                             = 8;
+  optional string productCode                             = 9;
+  optional string packageTraceId                          = 10;
+  optional string filterRiskLevel                         = 11;
+  optional string groupId                                 = 12;
+  optional string tenantGuid                              = 13;
+  optional bool shouldSkip                                = 14;
+  optional uint32 bitwiseFilterRiskLevel                  = 15;
+  // From telemetry common header
+  required TelemetryHeader.TELEMETRY_EVENT_ID eventId        = 101;
+  required TelemetryHeader.TELEMETRY_EVENT_SUB_ID eventSubId = 102;
+  required int64 eventHashId                                 = 103;
+  required int64 firstSeen                                   = 104;
+  optional int64 lastSeen                                    = 105;
+  required string endpointGuid                               = 106;
+  optional string endpointHostName                           = 107; // TODO: get from future schema
+  repeated string endpointIp                                 = 108;
+  repeated string endpointMacAddress                         = 109;
+  repeated string logonUser                                  = 110;
+  repeated string userDomain                                 = 111;
+  required string timezone                                   = 112;
+  required string pname                                      = 113;
+  required string pver                                       = 114;
+  required int32 plang                                       = 115;
+  required int32 pplat                                       = 116;
+  required string osName                                     = 117;
+  required string osVer                                      = 118;
+  optional string osDescription                              = 119;
+  optional string osType                                     = 120;
+  // WMI event fields. WMI event has no process info.
+  required int64 objectHashId         = 401;
+  required TELEMETRY_WMI_TYPE wmiType = 402;
+  optional string wmiNamespace        = 403;
+  optional string wmiClass            = 404;
+  optional string wmiName             = 405;
+  repeated string objectRawDataStr    = 406;
+  repeated int64 objectRawDataSize    = 407;
+  optional int64 objectFirstSeen      = 408;
+  optional int64 objectLastSeen       = 409;
+}

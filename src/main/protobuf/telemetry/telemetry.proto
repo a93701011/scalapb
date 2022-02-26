@@ -1,0 +1,124 @@
+syntax = "proto2";
+
+package sae.telemetry;
+
+import "common.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos.telemetry";
+
+message TelemetryHeader {
+  enum TELEMETRY_EVENT_ID {
+    TELEMETRY_PROCESS          = 1;
+    TELEMETRY_FILE             = 2;
+    TELEMETRY_CONNECTION       = 3;
+    TELEMETRY_DNS              = 4;
+    TELEMETRY_REGISTRY         = 5;
+    TELEMETRY_ACCOUNT          = 6;
+    TELEMETRY_INTERNET         = 7;
+    TELEMETRY_MODIFIED_PROCESS = 8;
+    TELEMETRY_WINDOWS_HOOK     = 9;
+    TELEMETRY_WINDOWS_EVENT    = 10;
+    TELEMETRY_AMSI             = 11;
+    TELEMETRY_WMI              = 12;
+    TELEMETRY_MEMORY           = 13;
+    TELEMETRY_BM               = 14;
+  }
+
+  enum TELEMETRY_EVENT_SUB_ID {
+    TELEMETRY_NONE = 0;
+
+    TELEMETRY_PROCESS_OPEN       = 1;
+    TELEMETRY_PROCESS_CREATE     = 2;
+    TELEMETRY_PROCESS_TERMINATE  = 3;
+    TELEMETRY_PROCESS_LOAD_IMAGE = 4;
+    TELEMETRY_PROCESS_EXECUTE    = 5;
+    TELEMETRY_PROCESS_CONNECT    = 6;
+    TELEMETRY_PROCESS_TRACME     = 7;
+
+    TELEMETRY_FILE_CREATE           = 101;
+    TELEMETRY_FILE_OPEN             = 102;
+    TELEMETRY_FILE_DELETE           = 103;
+    TELEMETRY_FILE_SET_SECURITY     = 104;
+    TELEMETRY_FILE_COPY             = 105;
+    TELEMETRY_FILE_MOVE             = 106;
+    TELEMETRY_FILE_CLOSE            = 107;
+    TELEMETRY_FILE_MODIFY_TIMESTAMP = 108;
+    TELEMETRY_FILE_MODIFY           = 109;
+
+    TELEMETRY_CONNECTION_CONNECT          = 201;
+    TELEMETRY_CONNECTION_LISTEN           = 202;
+    TELEMETRY_CONNECTION_CONNECT_INBOUND  = 203;
+    TELEMETRY_CONNECTION_CONNECT_OUTBOUND = 204;
+
+    TELEMETRY_DNS_QUERY = 301;
+
+    TELEMETRY_REGISTRY_CREATE = 401;
+    TELEMETRY_REGISTRY_SET    = 402;
+    TELEMETRY_REGISTRY_DELETE = 403;
+    TELEMETRY_REGISTRY_RENAME = 404;
+
+    TELEMETRY_ACCOUNT_ADD         = 501;
+    TELEMETRY_ACCOUNT_DELETE      = 502;
+    TELEMETRY_ACCOUNT_IMPERSONATE = 503;
+    TELEMETRY_ACCOUNT_MODIFY      = 504;
+
+    TELEMETRY_INTERNET_OPEN     = 601;
+    TELEMETRY_INTERNET_CONNECT  = 602;
+    TELEMETRY_INTERNET_DOWNLOAD = 603;
+
+    TELEMETRY_MODIFIED_PROCESS_CREATE_REMOTETHREAD = 701;
+    TELEMETRY_MODIFIED_PROCESS_WRITE_MEMORY        = 702;
+    TELEMETRY_MODIFIED_PROCESS_WRITE_PROCESS       = 703;
+    TELEMETRY_MODIFIED_PROCESS_READ_PROCESS        = 704;
+    TELEMETRY_MODIFIED_PROCESS_WRITE_PROCESS_NAME  = 705; 
+
+    TELEMETRY_WINDOWS_HOOK_SET = 801;
+
+    TELEMETRY_AMSI_EXECUTE = 901;
+
+    TELEMETRY_MEMORY_MODIFY            = 1001;
+    TELEMETRY_MEMORY_MODIFY_PERMISSION = 1002;
+    TELEMETRY_MEMORY_READ              = 1003;
+
+    TELEMETRY_BM_INVOKE     = 1101;
+    TELEMETRY_BM_INVOKE_API = 1102;
+  }
+
+  // From Common Header
+  required CommonHeader.EVENT_SOURCE_TYPE eventSourceType = 1;
+  required string version                                 = 2;
+  required int64 eventTime                                = 3;
+  required string customerId                              = 4;
+  repeated string tags                                    = 5;
+  required string uuid                                    = 6;
+  optional uint64 receivedTime                            = 7;
+  optional string packagePath                             = 8;
+  optional string productCode                             = 9;
+  optional string packageTraceId                          = 10;
+  optional string filterRiskLevel                         = 11;
+  optional string groupId                                 = 12;
+  optional string tenantGuid                              = 13;
+  optional bool shouldSkip                                = 14;
+  optional uint32 bitwiseFilterRiskLevel                  = 15;
+  // From telemetry common header
+  required TELEMETRY_EVENT_ID eventId        = 101;
+  required TELEMETRY_EVENT_SUB_ID eventSubId = 102;
+  required int64 eventHashId                 = 103;
+  required int64 firstSeen                   = 104;
+  optional int64 lastSeen                    = 105;
+  required string endpointGuid               = 106;
+  optional string endpointHostName           = 107;
+  repeated string endpointIp                 = 108;
+  repeated string endpointMacAddress         = 109;
+  repeated string logonUser                  = 110;
+  repeated string userDomain                 = 111;
+  required string timezone                   = 112;
+  required string pname                      = 113;
+  required string pver                       = 114;
+  required int32 plang                       = 115;
+  required int32 pplat                       = 116;
+  required string osName                     = 117;
+  required string osVer                      = 118;
+  optional string osDescription              = 119;
+  optional string osType                     = 120;
+}

@@ -1,0 +1,51 @@
+syntax = "proto2";
+
+package sae;
+
+import "telemetry/account.proto";
+import "telemetry/amsi.proto";
+import "telemetry/connection.proto";
+import "telemetry/dns.proto";
+import "telemetry/file.proto";
+import "telemetry/internet.proto";
+import "telemetry/process.proto";
+import "telemetry/registry.proto";
+import "telemetry/modified_process.proto";
+import "telemetry/windows_event.proto";
+import "telemetry/windows_hook.proto";
+import "telemetry/wmi.proto";
+import "telemetry/memory.proto";
+import "telemetry/bm.proto";
+import "product/jaguar.proto";
+import "product/luwak.proto";
+import "jaguar/activity_dna.proto";
+import "jaguar/activity_pte.proto";
+import "message/email_meta.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos";
+
+message Data {
+  oneof event {
+    .sae.telemetry.AccountEvent telemetry_account                  = 1;
+    .sae.telemetry.AmsiEvent telemetry_amsi                        = 2;
+    .sae.telemetry.ConnectionEvent telemetry_connection            = 3;
+    .sae.telemetry.DnsEvent telemetry_dns                          = 4;
+    .sae.telemetry.FileEvent telemetry_file                        = 5;
+    .sae.telemetry.InternetEvent telemetry_internet                = 6;
+    .sae.telemetry.ProcessEvent telemetry_process                  = 7;
+    .sae.telemetry.RegistryEvent telemetry_registry                = 8;
+    .sae.telemetry.ModifiedProcessEvent telemetry_modified_process = 9;
+    .sae.telemetry.WindowsEvent telemetry_windows_event            = 10;
+    .sae.telemetry.WindowsHookEvent telemetry_windows_hook         = 11;
+    .sae.telemetry.WmiEvent telemetry_wmi                          = 12;
+    .sae.telemetry.MemoryEvent telemetry_memory                    = 13;
+    .sae.telemetry.BmEvent telemetry_bm                            = 14;
+
+    .sae.product.JaguarEvent product_jaguar            = 101;
+    .sae.product.ProductDetectionLog product_event_log = 102;
+
+    .sae.jaguar.ActivityDnaEvent jaguar_activity_dna   = 103;
+    .sae.jaguar.ActivityPteEvent jaguar_activity_pte   = 104;
+    .sae.message.EmailMetaEvent message_email_meta     = 105;
+  }
+}

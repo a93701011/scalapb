@@ -1,0 +1,97 @@
+syntax = "proto2";
+
+package sae.telemetry;
+
+import "common.proto";
+import "telemetry/telemetry.proto";
+
+option java_package = "com.trendmicro.sae.datatypes.protos.telemetry";
+
+message WindowsEvent {
+  // From common header
+  required CommonHeader.EVENT_SOURCE_TYPE eventSourceType = 1;
+  required string version                                 = 2;
+  required int64 eventTime                                = 3;
+  required string customerId                              = 4;
+  repeated string tags                                    = 5;
+  required string uuid                                    = 6;
+  optional uint64 receivedTime                            = 7;
+  optional string packagePath                             = 8;
+  optional string productCode                             = 9;
+  optional string packageTraceId                          = 10;
+  optional string filterRiskLevel                         = 11;
+  optional string groupId                                 = 12;
+  optional string tenantGuid                              = 13;
+  optional bool shouldSkip                                = 14;
+  optional uint32 bitwiseFilterRiskLevel                  = 15;
+  // From telemetry common header
+  required TelemetryHeader.TELEMETRY_EVENT_ID eventId        = 101;
+  required TelemetryHeader.TELEMETRY_EVENT_SUB_ID eventSubId = 102;
+  required int64 eventHashId                                 = 103;
+  required int64 firstSeen                                   = 104;
+  optional int64 lastSeen                                    = 105;
+  required string endpointGuid                               = 106;
+  optional string endpointHostName                           = 107; // TODO: get from future schema
+  repeated string endpointIp                                 = 108;
+  repeated string endpointMacAddress                         = 109;
+  repeated string logonUser                                  = 110;
+  repeated string userDomain                                 = 111;
+  required string timezone                                   = 112;
+  required string pname                                      = 113;
+  required string pver                                       = 114;
+  required int32 plang                                       = 115;
+  required int32 pplat                                       = 116;
+  required string osName                                     = 117;
+  required string osVer                                      = 118;
+  optional string osDescription                              = 119;
+  optional string osType                                     = 120;
+  // Windows event fields. Windows event has no process info.
+  message correlation {
+    required string key   = 1; // windows event log column name
+    required string value = 2; // windows event log column value
+    optional int64 hashId = 3; // corrleative FNV hash id
+  }
+  required int64 objectHashId          = 401;
+  required int32 winEventId            = 402;
+  required string providerName         = 403;
+  required string providerGUID         = 404;
+  optional string channel              = 405;
+  optional int64 rt                    = 406;
+  required string rawDataStr           = 407;
+  required int64 rawDataSize           = 408;
+  repeated correlation correlationData = 409;
+  optional int64 objectFirstSeen       = 410;
+  optional int64 objectLastSeen        = 411;
+
+  // Extract from rawDataStr
+  optional string eventDataProviderPath              = 501; // winEventId = 5857
+  optional string eventDataProviderName              = 502; // winEventId = 5857
+  optional string eventDataOperation                 = 503; // winEventId = 11
+  optional string eventDataScriptBlockText           = 504; // winEventId = 4104
+  optional string eventDataLogonType                 = 505; // winEventId = 4624, 4625
+  optional string eventDataIpAddress                 = 506; // winEventId = 4624
+  optional string eventDataLogonProcessName          = 507; // winEventId = 4624
+  optional string eventDataAuthenticationPackageName = 508; // winEventId = 4624
+  optional string eventDataStatus                    = 509; // winEventId = 4625
+  optional string eventDataSubStatus                 = 510; // winEventId = 4625
+  optional string eventDataJobOwner                  = 511; // winEventId = 3
+  optional string eventDataProcessPath               = 512; // winEventId = 3
+  optional string eventDataTargetUserName            = 513; // winEventId = 4732
+  optional string eventDataConsumer                  = 514; // winEventId = 5861
+  optional string eventDataServiceName               = 515; // winEventId = 4697
+  optional string eventDataServiceFileName           = 516; // winEventId = 4697
+  optional string eventDataServiceAccount            = 517; // winEventId = 4697
+  optional string eventDataServiceType               = 518; // winEventId = 4697
+  optional string eventDataServiceStartType          = 519; // winEventId = 4697
+  optional string eventDataActionName                = 520; // winEventId = 200
+  optional string eventDataTaskName                  = 521; // winEventId = 100, 106, 129
+  optional string eventDataUserContext               = 522; // winEventId = 106
+  optional string eventDataPath                      = 523; // winEventId = 129
+
+  // Process fields
+  optional string processName                  = 602;
+  optional int32 processPid                    = 603;
+  optional string processCmd                   = 604;
+  repeated string processSigner                = 605;
+  repeated bool processSignerValid             = 606;  
+}
