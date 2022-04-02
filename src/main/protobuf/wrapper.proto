@@ -16,11 +16,6 @@ import "telemetry/windows_hook.proto";
 import "telemetry/wmi.proto";
 import "telemetry/memory.proto";
 import "telemetry/bm.proto";
-import "product/jaguar.proto";
-import "product/luwak.proto";
-import "jaguar/activity_dna.proto";
-import "jaguar/activity_pte.proto";
-import "message/email_meta.proto";
 
 option java_package = "com.trendmicro.sae.datatypes.protos";
 
@@ -40,12 +35,5 @@ message Data {
     .sae.telemetry.WmiEvent telemetry_wmi                          = 12;
     .sae.telemetry.MemoryEvent telemetry_memory                    = 13;
     .sae.telemetry.BmEvent telemetry_bm                            = 14;
-
-    .sae.product.JaguarEvent product_jaguar            = 101;
-    .sae.product.ProductDetectionLog product_event_log = 102;
-
-    .sae.jaguar.ActivityDnaEvent jaguar_activity_dna   = 103;
-    .sae.jaguar.ActivityPteEvent jaguar_activity_pte   = 104;
-    .sae.message.EmailMetaEvent message_email_meta     = 105;
   }
 }

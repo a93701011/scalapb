@@ -5,10 +5,17 @@ version := "0.1"
 scalaVersion := "2.12.10"
 
 libraryDependencies ++= Seq(
-  "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
-  "com.thesamet.scalapb" %% "sparksql-scalapb" % "0.11.0-RC1"
-)
+"org.apache.spark" %% "spark-core" % "3.0.1" % "provided",
+"org.apache.spark" %% "spark-sql" % "3.0.1" % "provided",
+"com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
+"com.thesamet.scalapb" %% "sparksql-scalapb" % "0.11.0-RC1",
+"com.thesamet.scalapb" %% "scalapb-json4s" % "0.11.1",
+"io.github.scalapb-json" %% "scalapb-circe" % "0.11.1",
+"org.json4s" %% "json4s-jackson" % "3.2.11"
 
+
+)
+dependencyOverrides += "com.thesamet.scalapb" %% "scalapb-runtime" % "0.11.0-M4"
 
 assemblyShadeRules in assembly := Seq(
   ShadeRule.rename("com.google.protobuf.**" -> "shadeproto.@1").inAll,
